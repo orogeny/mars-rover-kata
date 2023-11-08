@@ -1,3 +1,3 @@
-# TypeScript with Jest barebones repo
+# Mars Rover Kata
 
-## TS/Jest Template repository
+## For TechReturners
