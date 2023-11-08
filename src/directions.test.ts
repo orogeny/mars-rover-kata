@@ -1,4 +1,4 @@
-import { Direction, isDirection, rotateLeft, rotateRight } from "./directions";
+import { Direction, Rotation, isDirection, rotate } from "./directions";
 
 describe("test directions", () => {
   const compassPoints = [
@@ -16,21 +16,20 @@ describe("test directions", () => {
   test("not a direction", () => expect(isDirection("U")).toBe(false));
 });
 
-describe("test rotation functions", () => {
+describe("test rotate(rotation, from) function", () => {
   const goLeft = [
-    ["N", "W"],
-    ["E", "N"],
-    ["S", "E"],
-    ["W", "S"],
-  ] as Array<[Direction, Direction]>;
+    ["L", "N", "W"],
+    ["L", "E", "N"],
+    ["L", "S", "E"],
+    ["L", "W", "S"],
+  ] as Array<[Rotation, Direction, Direction]>;
 
-  const goRight = goLeft.map(([from, to]) => [to, from]);
+  const goRight = goLeft.map(([, from, to]) => ["R", to, from]) as Array<
+    [Rotation, Direction, Direction]
+  >;
 
-  test.each(goLeft)("assert rotateLeft('%s') returns '%s'", (from, to) =>
-    expect(rotateLeft(from)).toBe(to),
-  );
-
-  test.each(goRight)("assert rotateRight('%s') returns '%s'", (from, to) =>
-    expect(rotateRight(from)).toBe(to),
+  test.each([...goLeft, ...goRight])(
+    "assert rotate('%s', '%s') returns '%s'",
+    (rotation, from, expected) => expect(rotate(rotation, from)).toBe(expected),
   );
 });
