@@ -12,4 +12,6 @@ describe("test directions", () => {
     "assert '%s' is a Direction is %b",
     (point, expected) => expect(isDirection(point)).toBe(expected),
   );
+
+  test("not a direction", () => expect(isDirection("U")).toBe(false));
 });
