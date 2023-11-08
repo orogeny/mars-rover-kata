@@ -10,4 +10,10 @@ function rotateLeft(from: Direction) {
   return COMPASS_POINTS.at(COMPASS_POINTS.indexOf(from) - 1);
 }
 
-export { Direction, isDirection, rotateLeft };
+function rotateRight(from: Direction) {
+  return COMPASS_POINTS[
+    (COMPASS_POINTS.indexOf(from) + 1) % COMPASS_POINTS.length
+  ];
+}
+
+export { Direction, isDirection, rotateLeft, rotateRight };
