@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "env": { "browser": true, "node": true },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_[a-zA-Z0-0]*$",
+        "varsIgnorePattern": "^_[a-zA-Z0-0]*$"
+      }
+    ]
+  }
+}
