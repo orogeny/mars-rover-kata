@@ -6,4 +6,8 @@ function isDirection(input: string): input is Direction {
   return (COMPASS_POINTS as ReadonlyArray<string>).includes(input);
 }
 
-export { isDirection };
+function rotateLeft(from: Direction) {
+  return COMPASS_POINTS.at(COMPASS_POINTS.indexOf(from) - 1);
+}
+
+export { Direction, isDirection, rotateLeft };
