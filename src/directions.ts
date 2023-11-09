@@ -4,7 +4,7 @@
 //      b) all angles must be equal.
 const COMPASS_POINTS = ["N", "E", "S", "W"] as const;
 
-type Direction = (typeof COMPASS_POINTS)[number];
+type Direction = "N" | "E" | "S" | "W";
 
 type Rotation = "L" | "R";
 
@@ -17,11 +17,15 @@ function isDirection(input: string): input is Direction {
 }
 
 function rotate(rotation: Rotation, from: Direction) {
-  return rotation === "L"
-    ? COMPASS_POINTS.at(COMPASS_POINTS.indexOf(from) - 1)
-    : COMPASS_POINTS.at(
-        (COMPASS_POINTS.indexOf(from) + 1) % COMPASS_POINTS.length,
-      );
+  let rotated =
+    rotation === "L"
+      ? COMPASS_POINTS.indexOf(from) - 1
+      : COMPASS_POINTS.indexOf(from) + 1;
+
+  if (rotated === -1) rotated = COMPASS_POINTS.length - 1;
+  else if (rotated === COMPASS_POINTS.length) rotated = 0;
+
+  return COMPASS_POINTS[rotated];
 }
 
 export { Direction, Rotation, isDirection, isRotation, rotate };
