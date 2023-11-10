@@ -1,4 +1,4 @@
-import { instruct, Instruction, Pose } from "./poses";
+import { repose, Instruction, Pose } from "./poses";
 
 describe("poses", () => {
   const x = 3;
@@ -6,28 +6,28 @@ describe("poses", () => {
   const position = { x, y };
 
   test("moving North increases y", () => {
-    expect(instruct("M", { position, direction: "N" })).toEqual({
+    expect(repose("M", { position, direction: "N" })).toEqual({
       position: { x, y: y + 1 },
       direction: "N",
     });
   });
 
   test("moving South decreases y", () => {
-    expect(instruct("M", { position, direction: "S" })).toEqual({
+    expect(repose("M", { position, direction: "S" })).toEqual({
       position: { x, y: y - 1 },
       direction: "S",
     });
   });
 
   test("moving East increases x", () => {
-    expect(instruct("M", { position, direction: "E" })).toEqual({
+    expect(repose("M", { position, direction: "E" })).toEqual({
       position: { x: x + 1, y },
       direction: "E",
     });
   });
 
   test("moving West decreases x", () => {
-    expect(instruct("M", { position, direction: "W" })).toEqual({
+    expect(repose("M", { position, direction: "W" })).toEqual({
       position: { x: x - 1, y },
       direction: "W",
     });
@@ -40,7 +40,7 @@ describe("poses", () => {
 
     expect(
       instructions.reduce(
-        (current, instruction) => instruct(instruction, current),
+        (current, instruction) => repose(instruction, current),
         start,
       ),
     ).toEqual(expected);
@@ -53,7 +53,7 @@ describe("poses", () => {
 
     expect(
       instructions.reduce(
-        (current, instruction) => instruct(instruction, current),
+        (current, instruction) => repose(instruction, current),
         start,
       ),
     ).toEqual(expected);

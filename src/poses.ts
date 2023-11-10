@@ -1,4 +1,4 @@
-import { Direction, Rotation, rotate } from "./directions";
+import { Direction, Rotation, isRotation, rotate } from "./directions";
 
 type Instruction = Rotation | "M";
 
@@ -18,22 +18,22 @@ function displayPose(pose: Pose) {
   return `(${x}, ${y}) ${direction}`;
 }
 
-function instruct(instruction: Instruction, previous: Pose) {
-  switch (instruction) {
-    case "M":
-      return moveForward(previous);
-    case "L":
-      return rotatePort(previous);
-    case "R":
-      return rotateStarboard(previous);
+function repose(instruction: Instruction, previous: Pose) {
+  if (isRotation(instruction)) {
+    return {
+      position: previous.position,
+      direction: rotate(instruction, previous.direction),
+    };
   }
+
+  return moveForward(previous);
 }
 
-function moveForward(pose: Pose) {
+function moveForward(from: Pose) {
   const {
     direction,
     position: { x, y },
-  } = pose;
+  } = from;
 
   switch (direction) {
     case "N":
@@ -47,16 +47,4 @@ function moveForward(pose: Pose) {
   }
 }
 
-function rotatePort(pose: Pose) {
-  const { direction, position } = pose;
-
-  return { direction: rotate("L", direction), position };
-}
-
-function rotateStarboard(pose: Pose) {
-  const { direction, position } = pose;
-
-  return { direction: rotate("R", direction), position };
-}
-
-export { Instruction, Position, Pose, displayPose, instruct };
+export { Instruction, Position, Pose, displayPose, repose };

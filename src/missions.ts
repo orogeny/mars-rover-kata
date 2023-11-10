@@ -1,5 +1,5 @@
 import { Plateau, Tile, createPlateau, isBoundary } from "./plateau";
-import { Instruction, Pose, Position, instruct } from "./poses";
+import { Instruction, Pose, Position, repose } from "./poses";
 
 type Mission = {
   start: Pose;
@@ -40,7 +40,7 @@ function rover(start: Pose, instructions: Instruction[], chart: Plateau) {
 
     const [instruction, ...remaining] = instructions;
 
-    const next = instruct(instruction, previous);
+    const next = repose(instruction, previous);
 
     if (isBoundary(chart(next.position))) return { status: "halted", tracker };
 
