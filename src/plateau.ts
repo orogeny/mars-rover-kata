@@ -1,51 +1,31 @@
 import { Position } from "./poses";
 
-type Tile = {
+type Feature = {
   position: Position;
-  type: "empty" | "boundary";
+  content: string;
 };
 
-function createPlateau(topRight: Position) {
-  const boundary = Array.from({ length: topRight.x + 3 }).map((_, i) => ({
-    position: { x: i - 1, y: topRight.y + 1 },
-    type: "boundary",
-  })) as Tile[];
+function createPlateau(topRight: Position, features: Feature[]) {
+  const longitude = { min: 0, max: topRight.x };
+  const latituted = { min: 0, max: topRight.y };
 
-  const plateau = [boundary] as Tile[][];
-
-  for (let y = topRight.y; y >= 0; --y) {
-    const row = boundary.map((t, i) => {
-      if (i === 0) return { position: { x: -1, y }, type: "boundary" };
-      if (i === topRight.x + 2)
-        return { position: { x: topRight.x + 1, y }, type: "boundary" };
-      return { position: { x: i - 1, y }, type: "empty" };
-    }) as Tile[];
-    plateau.push(row);
-  }
-
-  const bottomBoundary = boundary.map((t) => ({
-    position: { x: t.position.x, y: -1 },
-    type: "boundary",
-  })) as Tile[];
-
-  plateau.push(bottomBoundary);
-
-  return plateau;
-}
-
-function displayPlateau(plateau: Tile[][]) {
-  for (let y = 0; y < plateau.length; ++y) {
-    let row = "";
-
-    for (let x = 0; x < plateau[y].length; ++x) {
-      const { position, type } = plateau[y][x] as Tile;
-      row += `${type === "boundary" ? "b" : "e"}:(${position.x}, ${
-        position.y
-      })`;
+  return function (position: Position) {
+    if (
+      position.x < longitude.min ||
+      position.x > longitude.max ||
+      position.y < latituted.min ||
+      position.y > latituted.max
+    ) {
+      return { position, content: "boundary" };
     }
 
-    console.log(row);
-  }
+    const content = features
+      .filter(({ position: { x, y } }) => x === position.x && y === position.y)
+      .map((f) => f.content)
+      .join(", ");
+
+    return { position, content };
+  };
 }
 
-export { createPlateau, displayPlateau };
+export { Feature, createPlateau };

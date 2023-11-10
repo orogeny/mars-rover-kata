@@ -1,4 +1,4 @@
-import { createPlateau } from "./plateau";
+import { createPlateau } from "./tableau";
 import { Position } from "./poses";
 import { Vehicle } from "./vehicles";
 
