@@ -18,15 +18,15 @@ function displayPose(pose: Pose) {
   return `(${x}, ${y}) ${direction}`;
 }
 
-function repose(instruction: Instruction, previous: Pose) {
+function repose(instruction: Instruction, from: Pose) {
   if (isRotation(instruction)) {
     return {
-      position: previous.position,
-      direction: rotate(instruction, previous.direction),
+      position: from.position,
+      direction: rotate(instruction, from.direction),
     };
   }
 
-  return moveForward(previous);
+  return moveForward(from);
 }
 
 function moveForward(from: Pose) {
