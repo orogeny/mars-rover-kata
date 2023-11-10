@@ -1,11 +1,13 @@
 import { Position } from "./poses";
 
-type Feature = {
+type Tile = {
   position: Position;
   content: string;
 };
 
-function createPlateau(topRight: Position, features: Feature[]) {
+type Plateau = (position: Position) => Tile;
+
+function createPlateau(topRight: Position, features: Tile[]) {
   const longitude = { min: 0, max: topRight.x };
   const latituted = { min: 0, max: topRight.y };
 
@@ -28,4 +30,8 @@ function createPlateau(topRight: Position, features: Feature[]) {
   };
 }
 
-export { Feature, createPlateau };
+function isBoundary(tile: Tile) {
+  return tile.content.includes("boundary");
+}
+
+export { Plateau, Tile, createPlateau, isBoundary };

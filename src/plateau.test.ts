@@ -1,4 +1,4 @@
-import { Feature, createPlateau } from "./plateau";
+import { Tile, createPlateau } from "./plateau";
 import { Position } from "./poses";
 
 describe("plateau", () => {
@@ -19,7 +19,7 @@ describe("plateau", () => {
       { x: -1, y: 5 },
       { position: { x: -1, y: 5 }, content: "boundary" },
     ],
-  ] as Array<[string, Position, Feature]>;
+  ] as Array<[string, Position, Tile]>;
 
   test.each(boundaries)(
     "%s should return boundary",
@@ -50,8 +50,6 @@ describe("plateau", () => {
     const interestingPlateau = createPlateau(top, [mountains, rover_1]);
 
     const tile = interestingPlateau(top);
-
-    console.log("tile: ", tile);
 
     expect(tile.content).toBe("mountains, rover_1");
   });
