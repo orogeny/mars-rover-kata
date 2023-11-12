@@ -12,9 +12,23 @@ describe("launch test missions", () => {
     }).toThrow("Top right plateau must be (0, 0) or greater");
   });
 
-  test("launch 2 mission", () => {
+  test("launch mission with invalid instruction", () => {
     const topRight = { x: 5, y: 5 };
 
+    // Mission with invalid initial instruction, should be ignored
+    const start = { direction: "E", position: { x: 3, y: 3 } } as Pose;
+    const instructions = "KMMRMMRMRRM".split("") as Instruction[];
+    const mission = { start: start, instructions: instructions };
+
+    const destination = { position: { x: 5, y: 1 }, direction: "E" };
+
+    expect(launch(topRight, [], [mission])).toEqual([destination]);
+  });
+
+  test("launch multiple mission", () => {
+    const topRight = { x: 5, y: 5 };
+
+    // Mission 1
     const start1 = { direction: "N", position: { x: 1, y: 2 } } as Pose;
     const instructions1 = "LMLMLMLMM".split("") as Instruction[];
 
@@ -22,8 +36,7 @@ describe("launch test missions", () => {
 
     const destination1 = { position: { x: 1, y: 3 }, direction: "N" } as Pose;
 
-    expect(launch(topRight, [], [mission1])).toEqual([destination1]);
-
+    // Mission 2
     const start2 = { direction: "E", position: { x: 3, y: 3 } } as Pose;
     const instructions2 = "MMRMMRMRRM".split("") as Instruction[];
     const mission2 = { start: start2, instructions: instructions2 };

@@ -9,6 +9,10 @@ type Pose = {
   direction: Direction;
 };
 
+function isInstruction(input: string): input is Instruction {
+  return input === "M" ? true : isRotation(input);
+}
+
 function displayPose(pose: Pose) {
   const {
     position: { x, y },
@@ -47,4 +51,4 @@ function moveForward(from: Pose) {
   }
 }
 
-export { Instruction, Position, Pose, displayPose, repose };
+export { Instruction, Position, Pose, displayPose, isInstruction, repose };
