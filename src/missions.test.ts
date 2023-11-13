@@ -25,7 +25,7 @@ describe("launch test missions", () => {
     expect(launch(topRight, [], [mission])).toEqual([destination]);
   });
 
-  test("launch multiple mission", () => {
+  test("launch multiple missions", () => {
     const topRight = { x: 5, y: 5 };
 
     // Mission 1
